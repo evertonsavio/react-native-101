@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
-//TIP: Cada view por default usa FlexBox. So precisa adicionar alignItems e justifycontent.
+import Colors from '../constants/colors';
+
 const Header = props => {
   return (
     <View style={styles.header}>
@@ -10,19 +11,19 @@ const Header = props => {
   );
 };
 
-const styles = StyleSheet.create ({
+const styles = StyleSheet.create({
   header: {
     width: '100%',
     height: 90,
     paddingTop: 36,
-    backgroundColor: '#f7287b',
+    backgroundColor: Colors.primary,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   headerTitle: {
     color: 'black',
-    height: 40,
-  },
+    fontSize: 18
+  }
 });
 
 export default Header;

@@ -1,58 +1,57 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
-  StyleSheet,
   Text,
+  StyleSheet,
   Button,
   TouchableWithoutFeedback,
   Keyboard,
-  Alert,
+  Alert
 } from 'react-native';
+
 import Card from '../components/Card';
-import Colors from '../constants/Colors';
 import Input from '../components/Input';
 import NumberContainer from '../components/NumberContainer';
+import Colors from '../constants/colors';
 
 const StartGameScreen = props => {
-  const [enteredValue, setEnteredValue] = useState ('');
-  const [confirmed, setConfirmed] = useState (false);
-  const [selectedNumber, setSelectedNumber] = useState ();
+  const [enteredValue, setEnteredValue] = useState('');
+  const [confirmed, setConfirmed] = useState(false);
+  const [selectedNumber, setSelectedNumber] = useState();
 
   const numberInputHandler = inputText => {
-    setEnteredValue (inputText.replace (/[^0-9]/g, ''));
+    setEnteredValue(inputText.replace(/[^0-9]/g, ''));
   };
 
   const resetInputHandler = () => {
-    setEnteredValue ('');
-    setConfirmed (false);
+    setEnteredValue('');
+    setConfirmed(false);
   };
 
   const confirmInputHandler = () => {
-    const chosenNumber = parseInt (enteredValue);
-    if (isNaN (chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
-      Alert.alert ('Invalid Number', 'Number has to be between 1 to 99', [
-        {text: 'Okay', style: 'destructive', onPress: resetInputHandler},
-      ]);
+    const chosenNumber = parseInt(enteredValue);
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert(
+        'Invalid number!',
+        'Number has to be a number between 1 and 99.',
+        [{ text: 'Okay', style: 'destructive', onPress: resetInputHandler }]
+      );
       return;
     }
-    setConfirmed (true);
-    setSelectedNumber (parseInt (enteredValue));
-    setEnteredValue (''); //This will be queue by React and just resolve next render,
-    //so its possible to access the value of enteredValue before it got empty string.
-    Keyboard.dismiss ();
+    setConfirmed(true);
+    setSelectedNumber(chosenNumber);
+    setEnteredValue('');
+    Keyboard.dismiss();
   };
 
   let confirmedOutput;
 
   if (confirmed) {
     confirmedOutput = (
-      <Card style={styles.summaryContainner}>
-        <Text>Numero escolhido:</Text>
-        <NumberContainer> {selectedNumber}</NumberContainer>
-        <Button
-          title="Start Game"
-          onPress={() => props.onStartGame (selectedNumber)}
-        />
+      <Card style={styles.summaryContainer}>
+        <Text>You selected</Text>
+        <NumberContainer>{selectedNumber}</NumberContainer>
+        <Button title="START GAME" onPress={() => props.onStartGame(selectedNumber)} />
       </Card>
     );
   }
@@ -60,19 +59,13 @@ const StartGameScreen = props => {
   return (
     <TouchableWithoutFeedback
       onPress={() => {
-        Keyboard.dismiss ();
+        Keyboard.dismiss();
       }}
     >
       <View style={styles.screen}>
-        <Text style={styles.title}>Comecar novo Jogo!</Text>
-        <Card
-          style={{
-            width: 350,
-            maxWidth: '90%',
-            alignItems: 'center',
-          }}
-        >
-          <Text>Selecione um Numero</Text>
+        <Text style={styles.title}>Start a New Game!</Text>
+        <Card style={styles.inputContainer}>
+          <Text>Select a Number</Text>
           <Input
             style={styles.input}
             blurOnSubmit
@@ -106,32 +99,38 @@ const StartGameScreen = props => {
   );
 };
 
-const styles = StyleSheet.create ({
+const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 10,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   title: {
     fontSize: 20,
-    marginVertical: 10, //Replace marginBottom or margintop
+    marginVertical: 10
+  },
+  inputContainer: {
+    width: 300,
+    maxWidth: '80%',
+    alignItems: 'center'
   },
   buttonContainer: {
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
-    paddingHorizontal: 15,
+    paddingHorizontal: 15
   },
   button: {
-    width: 120,
+    width: 100
   },
   input: {
     width: 50,
-    textAlign: 'center',
+    textAlign: 'center'
   },
-  summaryContainner: {
+  summaryContainer: {
     marginTop: 20,
-  },
+    alignItems: 'center'
+  }
 });
 
 export default StartGameScreen;
