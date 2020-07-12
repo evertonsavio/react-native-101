@@ -1,3 +1,6 @@
+//https://docs.expo.io/guides/userinterface/
+//UI KITS
+
 import React, {useState} from 'react';
 import {
   View,
