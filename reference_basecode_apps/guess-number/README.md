@@ -1,4 +1,4 @@
-# Classic To-do List React Native / Best way of Flex box items  
+# Guess Number Basic APP  
   
 ---
 
@@ -10,4 +10,4 @@ expo init projectname
 yarn start
 ```  
   
-![](rn-basecode/imgs/tela01.PNG)
+![](assets/cel.PNG)
