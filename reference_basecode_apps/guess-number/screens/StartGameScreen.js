@@ -13,6 +13,9 @@ import Card from '../components/Card';
 import Input from '../components/Input';
 import NumberContainer from '../components/NumberContainer';
 import Colors from '../constants/colors';
+import BodyText from '../components/BodyText';
+import TitleText from '../components/TitleText';
+import MainButton from '../components/MainButton';
 
 const StartGameScreen = (props) => {
   const [enteredValue, setEnteredValue] = useState('');
@@ -31,11 +34,9 @@ const StartGameScreen = (props) => {
   const confirmInputHandler = () => {
     const chosenNumber = parseInt(enteredValue);
     if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
-      Alert.alert(
-        'Invalid number!',
-        'Number has to be a number between 1 and 99.',
-        [{text: 'Okay', style: 'destructive', onPress: resetInputHandler}]
-      );
+      Alert.alert('Numero inválido!', 'O número deve ser entre 1 e 99.', [
+        {text: 'Okay =D', style: 'destructive', onPress: resetInputHandler},
+      ]);
       return;
     }
     setConfirmed(true);
@@ -49,12 +50,11 @@ const StartGameScreen = (props) => {
   if (confirmed) {
     confirmedOutput = (
       <Card style={styles.summaryContainer}>
-        <Text>You selected</Text>
+        <BodyText>Voce selecionou:</BodyText>
         <NumberContainer>{selectedNumber}</NumberContainer>
-        <Button
-          title="START GAME"
-          onPress={() => props.onStartGame(selectedNumber)}
-        />
+        <MainButton onPressProp={() => props.onStartGame(selectedNumber)}>
+          Iniciar Jogo
+        </MainButton>
       </Card>
     );
   }
@@ -66,9 +66,9 @@ const StartGameScreen = (props) => {
       }}
     >
       <View style={styles.screen}>
-        <Text style={styles.title}>Start a New Game!</Text>
+        <TitleText style={{paddingBottom: 20}}>Comece um novo Jogo!</TitleText>
         <Card style={styles.inputContainer}>
-          <Text>Select a Number</Text>
+          <Text>Selecione um numero:</Text>
           <Input
             style={styles.input}
             blurOnSubmit
@@ -82,14 +82,14 @@ const StartGameScreen = (props) => {
           <View style={styles.buttonContainer}>
             <View style={styles.button}>
               <Button
-                title="Reset"
+                title="Resetar"
                 onPress={resetInputHandler}
                 color={Colors.accent}
               />
             </View>
             <View style={styles.button}>
               <Button
-                title="Confirm"
+                title="Confirmar"
                 onPress={confirmInputHandler}
                 color={Colors.primary}
               />
@@ -107,11 +107,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     alignItems: 'center',
-  },
-  title: {
-    fontSize: 20,
-    marginVertical: 10,
-    fontFamily: 'open-sans-bold',
   },
   inputContainer: {
     width: 300,
