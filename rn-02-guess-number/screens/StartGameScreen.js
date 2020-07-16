@@ -22,50 +22,53 @@ import Colors from '../constants/colors';
 import BodyText from '../components/BodyText';
 import TitleText from '../components/TitleText';
 import MainButton from '../components/MainButton';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
-const StartGameScreen = props => {
-  const [enteredValue, setEnteredValue] = useState ('');
-  const [confirmed, setConfirmed] = useState (false);
-  const [selectedNumber, setSelectedNumber] = useState ();
-  const [buttonWidth, setButtonWidth] = useState (
-    Dimensions.get ('window').width / 4
+const StartGameScreen = (props) => {
+  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.DEFAULT);
+
+  const [enteredValue, setEnteredValue] = useState('');
+  const [confirmed, setConfirmed] = useState(false);
+  const [selectedNumber, setSelectedNumber] = useState();
+  const [buttonWidth, setButtonWidth] = useState(
+    Dimensions.get('window').width / 4
   );
 
   ///////////////////////////////////////////////////////
 
-  useEffect (() => {
+  useEffect(() => {
     const updateLayout = () => {
-      setButtonWidth (Dimensions.get ('window').width / 4);
+      setButtonWidth(Dimensions.get('window').width / 4);
     };
 
-    Dimensions.addEventListener ('change', updateLayout);
+    Dimensions.addEventListener('change', updateLayout);
     return () => {
-      Dimensions.removeEventListener ('change', updateLayout);
+      Dimensions.removeEventListener('change', updateLayout);
     };
   });
 
   ///////////////////////////////////////////////////////
-  const numberInputHandler = inputText => {
-    setEnteredValue (inputText.replace (/[^0-9]/g, ''));
+  const numberInputHandler = (inputText) => {
+    setEnteredValue(inputText.replace(/[^0-9]/g, ''));
   };
 
   const resetInputHandler = () => {
-    setEnteredValue ('');
-    setConfirmed (false);
+    setEnteredValue('');
+    setConfirmed(false);
   };
 
   const confirmInputHandler = () => {
-    const chosenNumber = parseInt (enteredValue);
-    if (isNaN (chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
-      Alert.alert ('Numero inválido!', 'O número deve ser entre 1 e 99.', [
+    const chosenNumber = parseInt(enteredValue);
+    if (isNaN(chosenNumber) || chosenNumber <= 0 || chosenNumber > 99) {
+      Alert.alert('Numero inválido!', 'O número deve ser entre 1 e 99.', [
         {text: 'Okay =D', style: 'destructive', onPress: resetInputHandler},
       ]);
       return;
     }
-    setConfirmed (true);
-    setSelectedNumber (chosenNumber);
-    setEnteredValue ('');
-    Keyboard.dismiss ();
+    setConfirmed(true);
+    setSelectedNumber(chosenNumber);
+    setEnteredValue('');
+    Keyboard.dismiss();
   };
 
   let confirmedOutput;
@@ -75,7 +78,7 @@ const StartGameScreen = props => {
       <Card style={styles.summaryContainer}>
         <BodyText>Voce selecionou:</BodyText>
         <NumberContainer>{selectedNumber}</NumberContainer>
-        <MainButton onPressProp={() => props.onStartGame (selectedNumber)}>
+        <MainButton onPressProp={() => props.onStartGame(selectedNumber)}>
           Iniciar Jogo
         </MainButton>
       </Card>
@@ -87,7 +90,7 @@ const StartGameScreen = props => {
       <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={30}>
         <TouchableWithoutFeedback
           onPress={() => {
-            Keyboard.dismiss ();
+            Keyboard.dismiss();
           }}
         >
           <View style={styles.screen}>
@@ -131,7 +134,7 @@ const StartGameScreen = props => {
   );
 };
 
-const styles = StyleSheet.create ({
+const styles = StyleSheet.create({
   screen: {
     flex: 1,
     padding: 10,
