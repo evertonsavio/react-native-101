@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Platform} from 'react-native';
 import * as Font from 'expo-font';
 import {AppLoading} from 'expo';
 import {NavigationContainer} from '@react-navigation/native';
@@ -7,6 +7,8 @@ import {createStackNavigator} from '@react-navigation/stack';
 import CategoriesScreen from './screens/CategoriesScreen';
 import CategoryMealsScreen from './screens/CategoryMealsScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
+
+import Colors from './constans/Colors';
 
 const Stack = createStackNavigator();
 
@@ -37,7 +39,17 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={CategoriesScreen}
-          options={{title: 'Meals'}}
+          options={{
+            title: 'Meus Bolinhos e Tortas <3',
+            headerStyle: {
+              backgroundColor:
+                Platform.OS === 'android' ? 'orange' : Colors.primaryColor,
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          }}
         />
         <Stack.Screen name="Meals" component={CategoryMealsScreen} />
         <Stack.Screen name="Details" component={MealDetailScreen} />
