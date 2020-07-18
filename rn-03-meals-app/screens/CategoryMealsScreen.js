@@ -22,7 +22,9 @@ const CategoryMealsScreen = ({route, navigation}) => {
         complexity={itemData.item.complexity}
         affordability={itemData.item.affordability}
         image={itemData.item.imageUrl}
-        onSelectMeal={() => {}}
+        onSelectMeal={() => {
+          navigation.navigate('Details', {mealId: itemData.item.id});
+        }}
       ></MealItem>
     );
   };
