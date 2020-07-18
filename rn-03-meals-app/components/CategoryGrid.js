@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Platform,
   TouchableNativeFeedback,
+  ImageBackground,
 } from 'react-native';
 
 const CategoryGrid = (props) => {
@@ -17,9 +18,18 @@ const CategoryGrid = (props) => {
     <View style={styles.gridItem}>
       <TouchableComponent onPress={props.onSelect}>
         <View style={{...styles.container, ...{backgroundColor: props.color}}}>
-          <Text style={styles.text} numberOfLines={2}>
-            {props.title}
-          </Text>
+          <ImageBackground
+            source={require('../assets/cake.jpg')}
+            style={styles.image}
+            resizeMode="cover"
+            fadeDuration={300}
+          >
+            <View style={styles.textContainer}>
+              <Text style={styles.text} numberOfLines={2}>
+                {props.title}
+              </Text>
+            </View>
+          </ImageBackground>
         </View>
       </TouchableComponent>
     </View>
@@ -36,6 +46,14 @@ const styles = StyleSheet.create({
     borderRadius: 7.5,
     overflow: 'hidden',
   },
+  image: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    borderRadius: 7.5,
+    overflow: 'hidden',
+  },
   container: {
     flex: 1,
     borderRadius: 7.5,
@@ -44,13 +62,16 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 2},
     shadowRadius: 10,
     elevation: 3, // FOR ANDROID WORKS
-    padding: 15,
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+    padding: 3,
+  },
+  textContainer: {
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    width: '100%',
   },
   text: {
     fontFamily: 'open-sans-bold',
     fontSize: 22,
     textAlign: 'right',
+    color: 'white',
   },
 });
