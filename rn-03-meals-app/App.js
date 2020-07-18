@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
-import {Text, View, Platform} from 'react-native';
 import * as Font from 'expo-font';
 import {AppLoading} from 'expo';
+import {enableScreens} from 'react-native-screens';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import CategoriesScreen from './screens/CategoriesScreen';
 import CategoryMealsScreen from './screens/CategoryMealsScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
+import DefaultOptions from './constans/DefaultOptions';
 
-import Colors from './constans/Colors';
+enableScreens();
 
 const Stack = createStackNavigator();
 
@@ -19,12 +20,12 @@ const fetchFonts = () => {
     'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
   });
 };
-///////////////////////////END OF FONTS ASYNC LOAD///////////////////////////
+
+////////////////////////////////APP////////////////////////////////////////
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 
-  ///////////////////Fetch FONTS//////////////
   if (!fontLoaded) {
     return (
       <AppLoading
@@ -33,26 +34,25 @@ export default function App() {
       />
     );
   }
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
           name="Home"
           component={CategoriesScreen}
-          options={{
-            title: 'Meus Bolinhos e Tortas <3',
-            headerStyle: {
-              backgroundColor:
-                Platform.OS === 'android' ? 'orange' : Colors.primaryColor,
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-          }}
+          options={{...DefaultOptions, title: 'Meus Bolinhos e Tortas <3'}}
         />
-        <Stack.Screen name="Meals" component={CategoryMealsScreen} />
-        <Stack.Screen name="Details" component={MealDetailScreen} />
+        <Stack.Screen
+          name="Meals"
+          component={CategoryMealsScreen}
+          options={DefaultOptions}
+        />
+        <Stack.Screen
+          name="Details"
+          component={MealDetailScreen}
+          options={DefaultOptions}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

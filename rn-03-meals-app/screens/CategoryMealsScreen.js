@@ -1,10 +1,18 @@
 import React from 'react';
 import {StyleSheet, Text, View, Button} from 'react-native';
 
-const CategoryMealsScreen = ({navigation}) => {
+import {CATEGORIES} from '../data/dummy-data';
+
+const CategoryMealsScreen = ({route, navigation}) => {
+  const catId = route.params.category;
+
+  const selectedCategory = CATEGORIES.find((cat) => cat.id === catId);
+  navigation.setOptions({title: selectedCategory.title});
+
+  //console.log(selectedCategory);
   return (
     <View style={styles.screen}>
-      <Text>Hello from Meals Screen</Text>
+      <Text>{selectedCategory.title}</Text>
       <View style={styles.button}>
         <Button
           title="Details"
