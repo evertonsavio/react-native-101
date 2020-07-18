@@ -41,7 +41,7 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={CategoriesScreen}
-          options={{...DefaultOptions, title: 'Meus Bolinhos e Tortas <3'}}
+          options={{...DefaultOptions, ...{title: 'Meus Bolinhos e Tortas <3'}}}
         />
         <Stack.Screen
           name="Meals"
