@@ -9,19 +9,16 @@ import CategoryMealsScreen from './screens/CategoryMealsScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
 import DefaultOptions from './constans/DefaultOptions';
 
-enableScreens();
-
-const Stack = createStackNavigator();
-
 //////////////////////////////FONTS ASYNC LOAD//////////////////////////////
 const fetchFonts = () => {
-  Font.loadAsync({
+  return Font.loadAsync({
     'open-sans': require('./assets/fonts/OpenSans-Regular.ttf'),
     'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
   });
 };
-
 ////////////////////////////////APP////////////////////////////////////////
+enableScreens();
+const Stack = createStackNavigator();
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -31,6 +28,7 @@ export default function App() {
       <AppLoading
         startAsync={fetchFonts}
         onFinish={() => setFontLoaded(true)}
+        onError={(err) => console.log(err)}
       />
     );
   }

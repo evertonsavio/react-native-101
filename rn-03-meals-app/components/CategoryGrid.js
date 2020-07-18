@@ -7,7 +7,6 @@ import {
   Platform,
   TouchableNativeFeedback,
 } from 'react-native';
-import {hidden} from 'ansi-colors';
 
 const CategoryGrid = (props) => {
   let TouchableComponent = TouchableOpacity;
