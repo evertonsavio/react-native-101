@@ -2,10 +2,11 @@ import React, {useState} from 'react';
 import * as Font from 'expo-font';
 import {AppLoading} from 'expo';
 import {enableScreens} from 'react-native-screens';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 
 import CategoriesScreen from './screens/CategoriesScreen';
 import CategoryMealsScreen from './screens/CategoryMealsScreen';
@@ -33,6 +34,7 @@ const MealsStack = createStackNavigator();
 const DetailsStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
+const TabMaterial = createMaterialBottomTabNavigator();
 ///////////////////////////////////////////////////////////////////////////
 const HomeStackScreen = () => (
   <HomeStack.Navigator initialRouteName="Home">
@@ -79,6 +81,14 @@ const HomeStackScreen = () => (
   </HomeStack.Navigator>
 );
 
+const myTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'rgb(255, 255, 255)',
+  },
+};
+
 ///////////////////////////////////////////////////////////////////////////////
 
 export default function App() {
@@ -96,7 +106,32 @@ export default function App() {
 
   return (
     <>
-      <NavigationContainer>
+      <NavigationContainer theme={myTheme}>
+        {/*<TabMaterial.Navigator
+          activeColor="#e91e63"
+          style={{backgroundColor: 'tomato'}}
+        >
+          <TabMaterial.Screen
+            name="Home"
+            component={HomeStackScreen}
+            options={{
+              tabBarLabel: 'Home',
+              tabBarIcon: ({color}) => (
+                <MaterialCommunityIcons name="home" color={color} size={26} />
+              ),
+            }}
+          />
+          <TabMaterial.Screen
+            name="Favorites"
+            component={FavoritesScreen}
+            options={{
+              tabBarLabel: 'Favorites',
+              tabBarIcon: ({color}) => (
+                <MaterialCommunityIcons name="bell" color={color} size={26} />
+              ),
+            }}
+          />
+        </TabMaterial.Navigator> */}
         <Tab.Navigator
           screenOptions={({route}) => ({
             tabBarIcon: ({focused, color, size}) => {
