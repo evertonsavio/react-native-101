@@ -5,7 +5,7 @@ const DefaultOptions = {
   headerBackground: () => (
     <Image
       style={{width: '100%', height: '100%'}}
-      source={require('../assets/chocolate.jpg')}
+      source={require('../assets/bolo.jpg')}
     />
   ),
   /*   headerStyle: {

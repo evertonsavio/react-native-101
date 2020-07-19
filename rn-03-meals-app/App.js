@@ -43,7 +43,7 @@ const HomeStackScreen = () => (
       component={CategoriesScreen}
       options={{
         ...DefaultOptions,
-        ...{title: 'Meus Bolinhos e Tortas <3'},
+        ...{title: 'Tartes et Gâteaux'},
       }}
     />
     <MealsStack.Screen
@@ -81,14 +81,6 @@ const HomeStackScreen = () => (
   </HomeStack.Navigator>
 );
 
-const myTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: 'rgb(255, 255, 255)',
-  },
-};
-
 ///////////////////////////////////////////////////////////////////////////////
 
 export default function App() {
@@ -106,15 +98,18 @@ export default function App() {
 
   return (
     <>
-      <NavigationContainer theme={myTheme}>
-        {/*<TabMaterial.Navigator
+      <NavigationContainer>
+        <TabMaterial.Navigator
           activeColor="#e91e63"
-          style={{backgroundColor: 'tomato'}}
+          inactiveColor="#3e2465"
+          barStyle={{backgroundColor: 'white'}}
+          shifting={true}
         >
           <TabMaterial.Screen
             name="Home"
             component={HomeStackScreen}
             options={{
+              tabBarColor: 'whitesmoke',
               tabBarLabel: 'Home',
               tabBarIcon: ({color}) => (
                 <MaterialCommunityIcons name="home" color={color} size={26} />
@@ -125,14 +120,15 @@ export default function App() {
             name="Favorites"
             component={FavoritesScreen}
             options={{
+              tabBarColor: 'lightgrey',
               tabBarLabel: 'Favorites',
               tabBarIcon: ({color}) => (
                 <MaterialCommunityIcons name="bell" color={color} size={26} />
               ),
             }}
           />
-        </TabMaterial.Navigator> */}
-        <Tab.Navigator
+        </TabMaterial.Navigator>
+        {/* <Tab.Navigator
           screenOptions={({route}) => ({
             tabBarIcon: ({focused, color, size}) => {
               let iconName;
@@ -156,7 +152,7 @@ export default function App() {
         >
           <Tab.Screen name="Home" component={HomeStackScreen} />
           <Tab.Screen name="Favorites" component={FavoritesScreen} />
-        </Tab.Navigator>
+        </Tab.Navigator> */}
       </NavigationContainer>
     </>
   );
