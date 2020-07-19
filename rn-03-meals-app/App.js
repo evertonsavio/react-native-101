@@ -15,6 +15,9 @@ import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import HeaderButton from './components/HeaderButtom';
 import FavoritesScreen from './screens/FavoritesScreen';
 
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {MaterialCommunityIcons} from '@expo/vector-icons';
+
 //////////////////////////////FONTS ASYNC LOAD//////////////////////////////
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -76,11 +79,7 @@ const HomeStackScreen = () => (
   </HomeStack.Navigator>
 );
 
-/* const MealsStackScreen = () => {
-  <MealsStack.Navigator>
-    
-  </MealsStack.Navigator>;
-}; */
+///////////////////////////////////////////////////////////////////////////////
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -98,7 +97,28 @@ export default function App() {
   return (
     <>
       <NavigationContainer>
-        <Tab.Navigator>
+        <Tab.Navigator
+          screenOptions={({route}) => ({
+            tabBarIcon: ({focused, color, size}) => {
+              let iconName;
+
+              if (route.name === 'Home') {
+                iconName = focused
+                  ? 'ios-restaurant'
+                  : 'ios-information-circle-outline';
+              } else if (route.name === 'Favorites') {
+                iconName = focused ? 'ios-star' : 'ios-star-outline';
+              }
+
+              // You can return any component that you like here!
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+          })}
+          tabBarOptions={{
+            activeTintColor: 'tomato',
+            inactiveTintColor: 'gray',
+          }}
+        >
           <Tab.Screen name="Home" component={HomeStackScreen} />
           <Tab.Screen name="Favorites" component={FavoritesScreen} />
         </Tab.Navigator>
