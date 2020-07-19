@@ -32,10 +32,25 @@ enableScreens();
 const HomeStack = createStackNavigator();
 const MealsStack = createStackNavigator();
 const DetailsStack = createStackNavigator();
+const FavoritesStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 const TabMaterial = createMaterialBottomTabNavigator();
 ///////////////////////////////////////////////////////////////////////////
+const FavoritesStackScreen = () => (
+  <FavoritesStack.Navigator initialRouteName="Favorites">
+    <FavoritesStack.Screen
+      name="Home"
+      component={CategoriesScreen}
+      options={{
+        ...DefaultOptions,
+        ...{title: 'Tartes et Gâteaux'},
+      }}
+    />
+    <FavoritesStack.Screen name="Favorites" component={FavoritesScreen} />
+  </FavoritesStack.Navigator>
+);
+
 const HomeStackScreen = () => (
   <HomeStack.Navigator initialRouteName="Home">
     <HomeStack.Screen
@@ -60,19 +75,21 @@ const HomeStackScreen = () => (
           headerRight: () => (
             <HeaderButtons HeaderButtonComponent={HeaderButton}>
               <Item
-                title="Favorite"
+                title="Favorites"
                 iconName="ios-star"
                 onPress={() => {
                   console.log('Mark as favorite');
                 }}
               />
+              {/*{' '}
               <Item
                 title="Favorite2"
                 iconName="ios-star-outline"
                 onPress={() => {
                   console.log('Mark as favorite');
                 }}
-              />
+              />{' '}
+              */}
             </HeaderButtons>
           ),
         },
@@ -109,7 +126,7 @@ export default function App() {
             name="Home"
             component={HomeStackScreen}
             options={{
-              tabBarColor: 'whitesmoke',
+              tabBarColor: 'lightgrey',
               tabBarLabel: 'Home',
               tabBarIcon: ({color}) => (
                 <MaterialCommunityIcons name="home" color={color} size={26} />
@@ -118,12 +135,12 @@ export default function App() {
           />
           <TabMaterial.Screen
             name="Favorites"
-            component={FavoritesScreen}
+            component={FavoritesStackScreen}
             options={{
-              tabBarColor: 'lightgrey',
+              tabBarColor: 'whitesmoke',
               tabBarLabel: 'Favorites',
               tabBarIcon: ({color}) => (
-                <MaterialCommunityIcons name="bell" color={color} size={26} />
+                <MaterialCommunityIcons name="star" color={color} size={26} />
               ),
             }}
           />
