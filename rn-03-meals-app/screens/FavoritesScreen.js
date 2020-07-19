@@ -4,14 +4,14 @@ import {StyleSheet, Text, View} from 'react-native';
 const FavoritesScreen = () => {
   return (
     <View style={styles.screen}>
-      <Text />
+      <Text>Hello from Favorite Screen</Text>
     </View>
   );
 };
 
 export default FavoritesScreen;
 
-const styles = StyleSheet.create ({
+const styles = StyleSheet.create({
   screen: {
     flex: 1,
     justifyContent: 'center',

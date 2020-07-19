@@ -5,12 +5,16 @@ import {Text, Button} from 'react-native';
 import {enableScreens} from 'react-native-screens';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+
 import CategoriesScreen from './screens/CategoriesScreen';
 import CategoryMealsScreen from './screens/CategoryMealsScreen';
 import MealDetailScreen from './screens/MealDetailScreen';
 import DefaultOptions from './constans/DefaultOptions';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import HeaderButton from './components/HeaderButtom';
+import FavoritesScreen from './screens/FavoritesScreen';
+import CategoriesScreenNavigation from './navigation/CategoriesScreenNavigation';
 
 //////////////////////////////FONTS ASYNC LOAD//////////////////////////////
 const fetchFonts = () => {
@@ -22,6 +26,7 @@ const fetchFonts = () => {
 ////////////////////////////////APP////////////////////////////////////////
 enableScreens();
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -37,46 +42,51 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={CategoriesScreen}
-          options={{...DefaultOptions, ...{title: 'Meus Bolinhos e Tortas <3'}}}
-        />
-        <Stack.Screen
-          name="Meals"
-          component={CategoryMealsScreen}
-          options={DefaultOptions}
-        />
-        <Stack.Screen
-          name="Details"
-          component={MealDetailScreen}
-          options={{
-            ...DefaultOptions,
-            ...{
-              headerRight: () => (
-                <HeaderButtons HeaderButtonComponent={HeaderButton}>
-                  <Item
-                    title="Favorite"
-                    iconName="ios-star"
-                    onPress={() => {
-                      console.log('Mark as favorite');
-                    }}
-                  />
-                  <Item
-                    title="Favorite2"
-                    iconName="ios-star-outline"
-                    onPress={() => {
-                      console.log('Mark as favorite');
-                    }}
-                  />
-                </HeaderButtons>
-              ),
-            },
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen
+            name="Home"
+            component={CategoriesScreenNavigation}
+            options={{
+              ...DefaultOptions,
+              ...{title: 'Meus Bolinhos e Tortas <3'},
+            }}
+          />
+          <Stack.Screen
+            name="Meals"
+            component={CategoryMealsScreen}
+            options={DefaultOptions}
+          />
+          <Stack.Screen
+            name="Details"
+            component={MealDetailScreen}
+            options={{
+              ...DefaultOptions,
+              ...{
+                headerRight: () => (
+                  <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                    <Item
+                      title="Favorite"
+                      iconName="ios-star"
+                      onPress={() => {
+                        console.log('Mark as favorite');
+                      }}
+                    />
+                    <Item
+                      title="Favorite2"
+                      iconName="ios-star-outline"
+                      onPress={() => {
+                        console.log('Mark as favorite');
+                      }}
+                    />
+                  </HeaderButtons>
+                ),
+              },
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
