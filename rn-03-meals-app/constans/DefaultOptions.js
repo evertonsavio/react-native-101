@@ -5,11 +5,11 @@ const DefaultOptions = {
   headerBackground: () => (
     <Image
       style={{width: '100%', height: '100%'}}
-      source={require('../assets/bolo.jpg')}
+      source={require('../assets/brigadeiro.jpg')}
     />
   ),
-  /*   headerStyle: {
-    backgroundColor: Platform.OS === 'android' ? '#f4511e' : 'ff6f00',
+  /* headerStyle: {
+    backgroundColor: Platform.OS === 'android' ? 'purple' : 'ff6f00',
   }, */
   headerTintColor: 'whitesmoke',
   headerTitleStyle: {

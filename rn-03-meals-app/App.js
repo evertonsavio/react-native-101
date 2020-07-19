@@ -15,6 +15,7 @@ import DefaultOptions from './constans/DefaultOptions';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import HeaderButton from './components/HeaderButtom';
 import FavoritesScreen from './screens/FavoritesScreen';
+import FiltersScreen from './screens/FiltersScreen';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
@@ -36,8 +37,43 @@ const FavoritesStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 const TabMaterial = createMaterialBottomTabNavigator();
+const FiltersStack = createStackNavigator();
 ///////////////////////////////////////////////////////////////////////////
-const FavoritesStackScreen = () => (
+const TabScreen = () => {
+  return (
+    <TabMaterial.Navigator
+      activeColor="#e91e63"
+      inactiveColor="#3e2465"
+      barStyle={{backgroundColor: 'white'}}
+      shifting={true}
+    >
+      <TabMaterial.Screen
+        name="Home"
+        component={HomeStackScreen}
+        options={{
+          tabBarColor: 'lightgrey',
+          tabBarLabel: 'Home',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="home" color={color} size={26} />
+          ),
+        }}
+      />
+      <TabMaterial.Screen
+        name="Favorites"
+        component={FavoritesStackScreen}
+        options={{
+          tabBarColor: 'whitesmoke',
+          tabBarLabel: 'Favorites',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="star" color={color} size={26} />
+          ),
+        }}
+      />
+    </TabMaterial.Navigator>
+  );
+};
+
+const FavoritesStackScreen = (props) => (
   <FavoritesStack.Navigator initialRouteName="Favorites">
     <FavoritesStack.Screen
       name="Home"
@@ -47,18 +83,69 @@ const FavoritesStackScreen = () => (
         ...{title: 'Tartes et Gâteaux'},
       }}
     />
-    <FavoritesStack.Screen name="Favorites" component={FavoritesScreen} />
+    <FavoritesStack.Screen
+      name="Favorites"
+      component={FavoritesScreen}
+      options={{
+        ...DefaultOptions,
+        ...{
+          title: 'Tartes et Gâteaux',
+          headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+              <Item
+                title="Favorites"
+                iconName="ios-menu"
+                onPress={() => {
+                  props.navigation.toggleDrawer();
+                }}
+              />
+              {/*{' '}
+            <Item
+              title="Favorite2"
+              iconName="ios-star-outline"
+              onPress={() => {
+                console.log('Mark as favorite');
+              }}
+            />{' '}
+            */}
+            </HeaderButtons>
+          ),
+        },
+      }}
+    />
   </FavoritesStack.Navigator>
 );
 
-const HomeStackScreen = () => (
+const HomeStackScreen = (props) => (
   <HomeStack.Navigator initialRouteName="Home">
     <HomeStack.Screen
       name="Home"
       component={CategoriesScreen}
       options={{
         ...DefaultOptions,
-        ...{title: 'Tartes et Gâteaux'},
+        ...{
+          title: 'iCake',
+          headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+              <Item
+                title="Favorites"
+                iconName="ios-menu"
+                onPress={() => {
+                  props.navigation.toggleDrawer();
+                }}
+              />
+              {/*{' '}
+              <Item
+                title="Favorite2"
+                iconName="ios-star-outline"
+                onPress={() => {
+                  console.log('Mark as favorite');
+                }}
+              />{' '}
+              */}
+            </HeaderButtons>
+          ),
+        },
       }}
     />
     <MealsStack.Screen
@@ -116,35 +203,10 @@ export default function App() {
   return (
     <>
       <NavigationContainer>
-        <TabMaterial.Navigator
-          activeColor="#e91e63"
-          inactiveColor="#3e2465"
-          barStyle={{backgroundColor: 'white'}}
-          shifting={true}
-        >
-          <TabMaterial.Screen
-            name="Home"
-            component={HomeStackScreen}
-            options={{
-              tabBarColor: 'lightgrey',
-              tabBarLabel: 'Home',
-              tabBarIcon: ({color}) => (
-                <MaterialCommunityIcons name="home" color={color} size={26} />
-              ),
-            }}
-          />
-          <TabMaterial.Screen
-            name="Favorites"
-            component={FavoritesStackScreen}
-            options={{
-              tabBarColor: 'whitesmoke',
-              tabBarLabel: 'Favorites',
-              tabBarIcon: ({color}) => (
-                <MaterialCommunityIcons name="star" color={color} size={26} />
-              ),
-            }}
-          />
-        </TabMaterial.Navigator>
+        <Drawer.Navigator>
+          <Drawer.Screen name="Home" component={TabScreen} />
+          <Drawer.Screen name="Filter" component={FiltersScreen} />
+        </Drawer.Navigator>
         {/* <Tab.Navigator
           screenOptions={({route}) => ({
             tabBarIcon: ({focused, color, size}) => {
