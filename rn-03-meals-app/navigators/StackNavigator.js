@@ -18,56 +18,58 @@ import FiltersScreen from '../screens/FiltersScreen';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import HeaderButton from '../components/HeaderButtom';
 
-export const HomeStackScreen = (props) => (
-  <HomeStack.Navigator initialRouteName="Home">
-    <HomeStack.Screen
-      name="Home"
-      component={CategoriesScreen}
-      options={{
-        ...DefaultOptions,
-        ...{
-          title: 'iCake',
-          headerLeft: () => (
-            <HeaderButtons HeaderButtonComponent={HeaderButton}>
-              <Item
-                title="Favorites"
-                iconName="ios-menu"
-                onPress={() => {
-                  props.navigation.toggleDrawer();
-                }}
-              />
-            </HeaderButtons>
-          ),
-        },
-      }}
-    />
-    <MealsStack.Screen
-      name="Meals"
-      component={CategoryMealsScreen}
-      options={DefaultOptions}
-    />
-    <DetailsStack.Screen
-      name="Details"
-      component={MealDetailScreen}
-      options={{
-        ...DefaultOptions,
-        ...{
-          headerRight: () => (
-            <HeaderButtons HeaderButtonComponent={HeaderButton}>
-              <Item
-                title="Favorites"
-                iconName="ios-star"
-                onPress={() => {
-                  console.log('Mark as favorite');
-                }}
-              />
-            </HeaderButtons>
-          ),
-        },
-      }}
-    />
-  </HomeStack.Navigator>
-);
+export const HomeStackScreen = (props) => {
+  return (
+    <HomeStack.Navigator initialRouteName="Home">
+      <HomeStack.Screen
+        name="Home"
+        component={CategoriesScreen}
+        options={{
+          ...DefaultOptions,
+          ...{
+            title: 'iCake',
+            headerLeft: () => (
+              <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                  title="Favorites"
+                  iconName="ios-menu"
+                  onPress={() => {
+                    props.navigation.toggleDrawer();
+                  }}
+                />
+              </HeaderButtons>
+            ),
+          },
+        }}
+      />
+      <MealsStack.Screen
+        name="Meals"
+        component={CategoryMealsScreen}
+        options={DefaultOptions}
+      />
+      <DetailsStack.Screen
+        name="Details"
+        component={MealDetailScreen}
+        options={{
+          ...DefaultOptions,
+          ...{
+            headerRight: () => (
+              <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                  title="Favorites"
+                  iconName="ios-star"
+                  onPress={() => {
+                    console.log('Mark as Favorite');
+                  }}
+                />
+              </HeaderButtons>
+            ),
+          },
+        }}
+      />
+    </HomeStack.Navigator>
+  );
+};
 
 export const FavoritesStackScreen = (props) => (
   <FavoritesStack.Navigator initialRouteName="Favorites">
