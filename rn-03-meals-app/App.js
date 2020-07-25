@@ -116,6 +116,50 @@ const FavoritesStackScreen = (props) => (
   </FavoritesStack.Navigator>
 );
 
+const filterStackScreen = (props) => {
+  return (
+    <FiltersStack.Navigator>
+      <FiltersStack.Screen name="Filtros" component={FiltersScreen} options={{
+        ...DefaultOptions,
+        ...{
+          title: 'Filtros',
+          headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+              <Item
+                title="Filtros"
+                iconName="ios-menu"
+                onPress={() => {
+                  props.navigation.toggleDrawer();
+                }}
+              />
+              {/*{' '}
+              <Item
+                title="Favorite2"
+                iconName="ios-star-outline"
+                onPress={() => {
+                  console.log('Mark as favorite');
+                }}
+              />{' '}
+              */}
+            </HeaderButtons>
+          ),
+          headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderButton}>
+              <Item
+                title="Favorites"
+                iconName="ios-save"
+                onPress={() => {
+                  console.log('Save');
+                }}
+              />
+            </HeaderButtons>
+          ),
+        },
+      }}/>
+    </FiltersStack.Navigator>
+  )
+}
+
 const HomeStackScreen = (props) => (
   <HomeStack.Navigator initialRouteName="Home">
     <HomeStack.Screen
@@ -205,7 +249,7 @@ export default function App() {
       <NavigationContainer>
         <Drawer.Navigator>
           <Drawer.Screen name="Home" component={TabScreen} />
-          <Drawer.Screen name="Filter" component={FiltersScreen} />
+          <Drawer.Screen name="Filter" component={filterStackScreen} />
         </Drawer.Navigator>
         {/* <Tab.Navigator
           screenOptions={({route}) => ({
