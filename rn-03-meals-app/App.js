@@ -20,6 +20,18 @@ import FiltersScreen from './screens/FiltersScreen';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 
+import {createStore, combineReducers} from 'redux';
+import mealsReducers from './store/reducers/meals';
+import {Provider} from 'react-redux';
+
+enableScreens();
+
+const rootReducer = combineReducers({
+  meals: mealsReducers,
+});
+
+const store = createStore(rootReducer);
+
 //////////////////////////////FONTS ASYNC LOAD//////////////////////////////
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -29,7 +41,7 @@ const fetchFonts = () => {
 };
 
 ////////////////////////////////APP////////////////////////////////////////
-enableScreens();
+
 const HomeStack = createStackNavigator();
 const MealsStack = createStackNavigator();
 const DetailsStack = createStackNavigator();
@@ -119,20 +131,23 @@ const FavoritesStackScreen = (props) => (
 const filterStackScreen = (props) => {
   return (
     <FiltersStack.Navigator>
-      <FiltersStack.Screen name="Filtros" component={FiltersScreen} options={{
-        ...DefaultOptions,
-        ...{
-          title: 'Filtros',
-          headerLeft: () => (
-            <HeaderButtons HeaderButtonComponent={HeaderButton}>
-              <Item
-                title="Filtros"
-                iconName="ios-menu"
-                onPress={() => {
-                  props.navigation.toggleDrawer();
-                }}
-              />
-              {/*{' '}
+      <FiltersStack.Screen
+        name="Filtros"
+        component={FiltersScreen}
+        options={{
+          ...DefaultOptions,
+          ...{
+            title: 'Filtros',
+            headerLeft: () => (
+              <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                  title="Filtros"
+                  iconName="ios-menu"
+                  onPress={() => {
+                    props.navigation.toggleDrawer();
+                  }}
+                />
+                {/*{' '}
               <Item
                 title="Favorite2"
                 iconName="ios-star-outline"
@@ -141,24 +156,25 @@ const filterStackScreen = (props) => {
                 }}
               />{' '}
               */}
-            </HeaderButtons>
-          ),
-          headerRight: () => (
-            <HeaderButtons HeaderButtonComponent={HeaderButton}>
-              <Item
-                title="Favorites"
-                iconName="ios-save"
-                onPress={() => {
-                  console.log('Save');
-                }}
-              />
-            </HeaderButtons>
-          ),
-        },
-      }}/>
+              </HeaderButtons>
+            ),
+            headerRight: () => (
+              <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                <Item
+                  title="Favorites"
+                  iconName="ios-save"
+                  onPress={() => {
+                    console.log('Save');
+                  }}
+                />
+              </HeaderButtons>
+            ),
+          },
+        }}
+      />
     </FiltersStack.Navigator>
-  )
-}
+  );
+};
 
 const HomeStackScreen = (props) => (
   <HomeStack.Navigator initialRouteName="Home">
@@ -245,7 +261,7 @@ export default function App() {
   }
 
   return (
-    <>
+    <Provider store={store}>
       <NavigationContainer>
         <Drawer.Navigator>
           <Drawer.Screen name="Home" component={TabScreen} />
@@ -277,6 +293,6 @@ export default function App() {
           <Tab.Screen name="Favorites" component={FavoritesScreen} />
         </Tab.Navigator> */}
       </NavigationContainer>
-    </>
+    </Provider>
   );
 }
