@@ -1,4 +1,4 @@
-# Classic Guess a Number APP
+# Classic Meals APP
   
 ---
 
@@ -10,4 +10,4 @@ expo init projectname
 yarn start
 ```  
   
-![](rn-03-meals-app/assets/guess.png)
+![](rn-03-meals-app/assets/meals.png)
