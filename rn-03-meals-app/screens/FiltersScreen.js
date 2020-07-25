@@ -1,5 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import {StyleSheet, Text, View, Switch} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {setFilters} from '../store/actions/mealsAction';
 
 const FilterSwitch = (props) => {
   return (
@@ -18,8 +20,26 @@ const FilterSwitch = (props) => {
 const FiltersScreen = () => {
   const [isGlutenFree, setIsGlutenFree] = useState(false);
   const [isLactoseFree, setIsLactoseFree] = useState(false);
-  const [vegan, setVegan] = useState(false);
-  const [vegetarian, setVegetarian] = useState(false);
+  const [isVegan, setVegan] = useState(false);
+  const [isVegetarian, setVegetarian] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const saveFilters = useCallback(() => {
+    const appliedFilters = {
+      glutenFree: isGlutenFree,
+      lactoseFree: isLactoseFree,
+      vegan: isVegan,
+      vegetarian: isVegetarian,
+    };
+
+    dispatch(setFilters(appliedFilters));
+  }, [isVegetarian, isGlutenFree, isLactoseFree, isVegan]);
+
+  useEffect(() => {
+    saveFilters();
+  }, [saveFilters]);
+
   return (
     <View style={styles.screen}>
       <Text style={styles.title}>Available Filters /Restrictions</Text>
@@ -35,12 +55,12 @@ const FiltersScreen = () => {
       ></FilterSwitch>
       <FilterSwitch
         label="Vegan"
-        value={vegan}
+        value={isVegan}
         onChange={(newValue) => setVegan(newValue)}
       ></FilterSwitch>
       <FilterSwitch
         label="Vegetarian"
-        value={vegetarian}
+        value={isVegetarian}
         onChange={(newValue) => setVegetarian(newValue)}
       ></FilterSwitch>
     </View>
